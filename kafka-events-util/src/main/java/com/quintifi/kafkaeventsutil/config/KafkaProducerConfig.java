@@ -1,4 +1,4 @@
-package com.til.gaana.log.api.util.config;
+package com.quintifi.kafkaeventsutil.config;
 
 import java.util.HashMap;
 import java.util.Map;
