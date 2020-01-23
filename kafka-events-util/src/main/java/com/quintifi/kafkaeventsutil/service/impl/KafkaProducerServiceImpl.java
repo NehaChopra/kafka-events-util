@@ -1,12 +1,15 @@
-package com.quintifi.kafkaeventsutil.config;
+package com.quintifi.kafkaeventsutil.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import com.quintifi.kafkaeventsutil.service.KafkaProducerService;
 
 /**
  * 
@@ -14,12 +17,14 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
  *
  */
 @Service
-public class KafkaProducer {
+public class KafkaProducerServiceImpl implements KafkaProducerService {
 
-	private static final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate;
 
-	public void sendMessage(String topic, String key, String message, KafkaTemplate<String, String> kafkaTemplate)
-			throws Exception {
+	private static final Logger logger = LoggerFactory.getLogger(KafkaProducerServiceImpl.class);
+
+	public <T> void sendMessage(String topic, String key, String message) throws Exception {
 
 		try {
 			ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, key, message);
@@ -39,8 +44,7 @@ public class KafkaProducer {
 		}
 	}
 
-	public void sendMessage(String topic, String message, KafkaTemplate<String, String> kafkaTemplate)
-			throws Exception {
+	public <T> void sendMessage(String topic, String message) throws Exception {
 
 		try {
 			ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
@@ -60,8 +64,7 @@ public class KafkaProducer {
 		}
 	}
 
-	public void sendMessage(String topic, Integer partition, String key, String message,
-			KafkaTemplate<String, String> kafkaTemplate) throws Exception {
+	public <T> void sendMessage(String topic, Integer partition, String key, String message) throws Exception {
 
 		try {
 			ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, partition, key, message);
@@ -81,8 +84,8 @@ public class KafkaProducer {
 		}
 	}
 
-	public void sendMessage(String topic, Integer partition, String key, Long timestamp, String message,
-			KafkaTemplate<String, String> kafkaTemplate) throws Exception {
+	public <T> void sendMessage(String topic, Integer partition, String key, Long timestamp, String message)
+			throws Exception {
 
 		try {
 			ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, partition, timestamp, key,
