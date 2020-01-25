@@ -1,5 +1,7 @@
 package com.quintifi.kafkaeventsutil.config;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,15 @@ public class JsonHelper {
 			return objectMapper.readValue(json, clazz);
 		} catch (Exception e) {
 			throw e;
+		}
+	}
+	
+	public boolean isJSONValid(String jsonInString) {
+		try {
+			objectMapper.readTree(jsonInString);
+			return true;
+		} catch (IOException e) {
+			return false;
 		}
 	}
 }
