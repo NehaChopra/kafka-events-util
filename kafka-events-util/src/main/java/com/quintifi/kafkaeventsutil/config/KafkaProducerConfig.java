@@ -41,10 +41,14 @@ public class KafkaProducerConfig {
 	}
 
 	public Map<String, Object> setProducerConfig(Map<String, Object> props) {
-		props.put(ProducerConfig.RETRIES_CONFIG, 0);
-		props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
-		props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
+		props.put(ProducerConfig.RETRIES_CONFIG, 5);
+		props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384 * 4);// Batch up to 64K buffer sizes.
+		props.put(ProducerConfig.LINGER_MS_CONFIG, 100);// Linger up to 100 ms before sending batch if size not met
+		props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");// Use Snappy compression for batch compression.
+																	// high speeds and reasonable compressio
 		props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
+		props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 10);
+		props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 15000);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		return props;
