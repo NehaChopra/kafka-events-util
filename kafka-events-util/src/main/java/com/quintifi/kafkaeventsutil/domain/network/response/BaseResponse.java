@@ -51,4 +51,10 @@ public class BaseResponse implements Serializable {
 		this.errorCode = errorCode;
 	}
 
+	@Override
+	public String toString() {
+		return "BaseResponse [status=" + status + ", error=" + error + ", errorCode=" + errorCode + ", errorDesc="
+				+ errorDesc + "]";
+	}
+
 }
