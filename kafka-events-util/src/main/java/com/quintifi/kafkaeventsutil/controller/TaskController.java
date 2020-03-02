@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quintifi.kafkaeventsutil.domain.network.request.BaseRequest;
@@ -29,7 +30,7 @@ public class TaskController {
 	private KafkaAsyncProducerService kafkaAsyncProducerService;
 
 	@PostMapping("/sync/payload")
-	public void pushPayload(BaseRequest request) {
+	public void pushPayload(@RequestBody BaseRequest request) {
 		LOGGER.debug("Inside function findAll of TodoTaskController...........Retrieving tasks !!");
 
 		if (StringUtils.isNotEmpty(request.getTopic()) && !ObjectUtils.isEmpty(request.getPartition())
@@ -76,7 +77,7 @@ public class TaskController {
 	}
 
 	@PostMapping("/async/payload")
-	public void pushAsyncPayload(BaseRequest request) {
+	public void pushAsyncPayload(@RequestBody BaseRequest request) {
 		LOGGER.debug("Inside function findAll of TodoTaskController...........Retrieving tasks !!");
 
 		if (StringUtils.isNotEmpty(request.getTopic()) && !ObjectUtils.isEmpty(request.getPartition())
