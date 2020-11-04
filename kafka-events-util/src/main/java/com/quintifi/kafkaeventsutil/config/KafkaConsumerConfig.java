@@ -24,43 +24,64 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 @EnableKafka
 public class KafkaConsumerConfig {
 
-    @Value("${kafka.broker.address}")
-    private String brokerAddress;
-    @Value("${kafka.consumer.concurrency}")
-    private Integer consumerConcurrency;
-    @Value("${kafka.consume.group}")
-    private String consumerGroup;
-    @Value("${kafka.consume.batch.size}")
-    private Integer consumerBatchSize;
-    
-    @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(consumerConcurrency);
-        factory.setBatchListener(true);
-        factory.getContainerProperties().setPollTimeout(3000);
-        factory.getContainerProperties().setAckMode(AbstractMessageListenerContainer.AckMode.BATCH);
-        return factory;
-    }
+	@Value("${kafka.broker.address}")
+	private String brokerAddress;
 
-    @Bean
-    public ConsumerFactory<Integer, String> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
-    }
+	@Value("${kafka.consumer.concurrency}")
+	private Integer consumerConcurrency;
 
-    private Map<String, Object> consumerConfigs() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, brokerAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
-        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
-        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
-        props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, "300000");
-        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, consumerBatchSize);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        return props;
-    }
+	@Value("${kafka.consume.group}")
+	private String consumerGroup;
+
+	@Value("${kafka.consumer.batch.size}")
+	private String consumerBatchSize;
+
+	@Value("${enable.auto.commit}")
+	private String enableAutoCommit;
+
+	@Value("${auto.commit.interval.ms.config}")
+	private String autoCommitIntervalMsConfig;
+
+	@Value("${session.timeout.ms.config}")
+	private String sessionTimeoutMsConfig;
+
+	@Value("${request.timeout.ms.config}")
+	private String requestTimeoutMsConfig;
+
+	@Value("${key.deserializer}")
+	private String keyDeserializer;
+
+	@Value("${value.deserializer}")
+	private String valueDeserializer;
+
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactory());
+		factory.setConcurrency(consumerConcurrency);
+		factory.setBatchListener(true);
+		factory.getContainerProperties().setPollTimeout(3000);
+		factory.getContainerProperties().setAckMode(AbstractMessageListenerContainer.AckMode.BATCH);
+		return factory;
+	}
+
+	@Bean
+	public ConsumerFactory<Integer, String> consumerFactory() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+	}
+
+	private Map<String, Object> consumerConfigs() {
+		Map<String, Object> props = new HashMap<>();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, brokerAddress);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
+		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, enableAutoCommit);
+		props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, autoCommitIntervalMsConfig);
+		props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, sessionTimeoutMsConfig);
+		props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, requestTimeoutMsConfig);
+		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, consumerBatchSize);
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializer);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializer);
+		return props;
+	}
 
 }

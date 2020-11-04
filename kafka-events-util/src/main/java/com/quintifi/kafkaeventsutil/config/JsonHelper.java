@@ -33,7 +33,7 @@ public class JsonHelper {
 			throw e;
 		}
 	}
-	
+
 	public boolean isJSONValid(String jsonInString) {
 		try {
 			objectMapper.readTree(jsonInString);

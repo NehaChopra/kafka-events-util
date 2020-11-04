@@ -22,7 +22,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
-	private static final Logger logger = LoggerFactory.getLogger(KafkaProducerServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerServiceImpl.class);
 
 	public <T> void sendMessage(String topic, String key, String message) throws Exception {
 
@@ -35,11 +35,11 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
 				@Override
 				public void onFailure(Throwable ex) {
-					logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
+					LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
 				}
 			});
 		} catch (Exception e) {
-			logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
+			LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
 			throw e;
 		}
 	}
@@ -55,11 +55,11 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
 				@Override
 				public void onFailure(Throwable ex) {
-					logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
+					LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
 				}
 			});
 		} catch (Exception e) {
-			logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
+			LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
 			throw e;
 		}
 	}
@@ -75,11 +75,11 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
 				@Override
 				public void onFailure(Throwable ex) {
-					logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
+					LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
 				}
 			});
 		} catch (Exception e) {
-			logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
+			LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
 			throw e;
 		}
 	}
@@ -97,11 +97,11 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
 				@Override
 				public void onFailure(Throwable ex) {
-					logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
+					LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), ex);
 				}
 			});
 		} catch (Exception e) {
-			logger.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
+			LOGGER.error(String.format("Failed to send [ %s ] to topic %s ", message, topic), e);
 			throw e;
 		}
 	}
