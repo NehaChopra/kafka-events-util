@@ -23,7 +23,7 @@ import com.quintifi.kafkaeventsutil.domain.network.response.BaseResponse;
 @ControllerAdvice(basePackages = { "" })
 public class ValidatorControllerAdvice {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(ValidatorControllerAdvice.class);
 
 	@ResponseBody
 	@ExceptionHandler(ApiException.class)
